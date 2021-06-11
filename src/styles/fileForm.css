@@ -1,0 +1,12 @@
+
+.hidden {
+    display: none;
+}
+
+#fileForm select {
+    max-width: 100px;
+}
+
+.fileForm-child {
+    margin: 10px 2px 10px 2px;
+}

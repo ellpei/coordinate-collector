@@ -1,0 +1,49 @@
+.react-image-dot__wrapper {
+  background-size: cover;
+  position: relative;
+  background-color: gray;
+  float:left;
+  border-style: dotted;
+  border-color: gray;
+  border-width: 1px;
+}
+
+.react-image-dot {
+  position: absolute;
+  cursor: move; /* Fallback for older browsers */
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
+  z-index: 2;
+  border-radius: 0% 100% 100% 100%; 
+}
+
+.react-image-dot__grabbing {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing;
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#canvas {
+    position: absolute;
+    z-index: 1;
+}
+
+.bottom-toolbox {
+    position: relative;
+    width: 100%;
+}
+
+.dotsinfotable {
+    text-align: left;
+    max-width: 600px !important;
+}

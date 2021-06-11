@@ -1,0 +1,40 @@
+.App {
+  text-align: center;
+}
+
+@font-face {
+    font-family: 'sourcesanspro';
+    src: url('../assets/SourceSansPro-SemiBold.ttf');
+}
+
+.header {
+    font-family: 'sourcesanspro';
+    color: black;
+}
+
+.navbar {
+    font-family: 'sourcesanspro';
+    font-size: 1.4rem;
+}
+
+.vertical-center {
+    min-height: 100%;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    max-width: 100% !important;
+}
+
+.page-content {
+    margin: 40px;
+    text-align: left;
+}
+
+.json-snippet {
+    background-color: #D8BFD8;
+    padding: 10px 40px 10px 40px;
+    border-radius: 2px;
+}
