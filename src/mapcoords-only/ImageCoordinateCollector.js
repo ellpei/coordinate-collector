@@ -51,6 +51,7 @@ export default class ImageCoordinateCollector extends React.Component {
             let dot = {
                 x: x,
                 y: y,
+                areaId: this.props.areaId
             };
 
             this.setState({
@@ -59,7 +60,6 @@ export default class ImageCoordinateCollector extends React.Component {
                 currentDot: dot,
             });
         }
-
     }
 
     updateCurrentDot = (dot) => {

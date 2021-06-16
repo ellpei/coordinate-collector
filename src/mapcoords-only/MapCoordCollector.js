@@ -48,6 +48,7 @@ class MapCoordCollector extends React.Component {
         let {dots} = this.state;
         this.deleteDot(dots.length-1);
         this.addDot(dot);
+        this.setState({areaId: dot.areaId});
     }
 
     deleteDot = (index) => {
@@ -106,6 +107,7 @@ class MapCoordCollector extends React.Component {
                 saveDot={this.saveDot}
                 addDot={this.addDot}
                 dotRadius={10}
+                areaId={this.state.areaId}
                 />
                 <div className="bottom-toolbox">
                 {this.props.resort.title}
