@@ -99,6 +99,7 @@ class MapCoordCollector extends React.Component {
                 />
                 <ImageCoordinateCollector
                 backgroundImageUrl={src}
+                title={this.state.title}
                 onLoadMap={this.onLoadPisteMap}
                 dots={dots}
                 deleteDot={this.deleteDot}
@@ -107,6 +108,7 @@ class MapCoordCollector extends React.Component {
                 resetDots={this.resetDots}
                 dotRadius={10}
                 areaId={this.state.areaId}
+                loadPointData={this.loadPointData}
                 />
             </div>);
     }

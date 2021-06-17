@@ -178,9 +178,9 @@ export default class ImageCoordinateCollector extends React.Component {
                     <Col>
                             <FileForm
                                 imgSrc={this.state.src}
-                                title={this.state.title}
-                                points={this.state.dots}
-                                loadPointData={this.loadPointData}/>
+                                title={this.props.title}
+                                points={this.props.dots}
+                                loadPointData={this.props.loadPointData}/>
                     </Col>
                 </Row>
                 <Row className="text-center">
