@@ -14,7 +14,7 @@ class InputModal extends React.Component {
                 id: '',
                 name: '',
                 shortName: '',
-                areaId: props.currentDot.areaId
+                areaId: props.currentDot.areaId ? props.currentDot.areaId : ''
             }] : props.currentDot.items
         };
     }
@@ -43,10 +43,19 @@ class InputModal extends React.Component {
             id: '',
             name: '',
             shortName: '',
-            areaId: this.props.currentDot.areaId
+            areaId: this.state.items[0].areaId ? this.state.items[0].areaId : '',
         };
 
         this.setState({items: [...this.state.items, newObj ]});
+    }
+
+    deleteItem = (index) => {
+        let items = [...this.state.items];
+        items = items.filter((item, i) => i !== index);
+        this.setState({items: [...items]});
+        if(items.length === 0) {
+            this.props.handleClose();
+        }
     }
 
     render() {
@@ -78,8 +87,7 @@ class InputModal extends React.Component {
                                     </Col>
                                 </Form.Group>
                                 <hr/>
-                                {
-                                    this.state.items.map( (x, i) =>
+                                {this.state.items.map( (x, i) =>
                                         <div className="dot-form-item" key={i}>
                                             <Form.Group as={Row}>
                                                 <Form.Label column >
@@ -89,7 +97,7 @@ class InputModal extends React.Component {
                                                   <Form.Control type="text"
                                                   placeholder="Enter id..."
                                                   name="id"
-                                                  defaultValue={x.id}
+                                                  value={x.id}
                                                   onChange={(e) => this.handleInputChange(e, i)}
                                                   autoFocus/>
                                                 </Col>
@@ -103,7 +111,7 @@ class InputModal extends React.Component {
                                                   <Form.Control type="text"
                                                   placeholder="Enter name..."
                                                   name="name"
-                                                  defaultValue={x.name}
+                                                  value={x.name}
                                                   onChange={(e) => this.handleInputChange(e, i)}/>
                                                 </Col>
                                             </Form.Group>
@@ -116,7 +124,7 @@ class InputModal extends React.Component {
                                                   <Form.Control type="text"
                                                   placeholder="Enter shortName..."
                                                   name="shortName"
-                                                  defaultValue={x.shortName}
+                                                  value={x.shortName}
                                                   onChange={(e) => this.handleInputChange(e, i)}/>
                                                 </Col>
                                             </Form.Group>
@@ -129,21 +137,24 @@ class InputModal extends React.Component {
                                                   <Form.Control type="text"
                                                   placeholder="Enter areaId..."
                                                   name="areaId"
-                                                  defaultValue={x.areaId}
+                                                  value={x.areaId}
                                                   onChange={(e) => this.handleInputChange(e, i)}
                                                   onKeyPress={this.onKeyPress} />
                                                 </Col>
                                             </Form.Group>
+                                            <Form.Group as={Row}>
+                                                <Form.Label column >
+                                                </Form.Label>
+                                                <Col sm={8}>
+                                                <Button size="sm" variant="outline-success" className="float-right" onClick={this.addAnother} >Add another</Button>
+                                                <Button size="sm" variant="outline-danger" className="float-right" onClick={(e) => this.deleteItem(i)}>Delete</Button>
+                                                </Col>
+                                            </Form.Group>
                                             <hr/>
-                                        </div>
-                                    )
-
-                                }
-
+                                        </div>)}
                             </Form>
                         </Card.Body>
                         <Card.Footer>
-                            <Button variant="success" className="float-left" onClick={this.addAnother}>+</Button>
                             <Button variant="secondary" onClick={handleClose}>Delete</Button>
                             <Button variant="secondary" onClick={() => this.props.handleSave(this.state)}>Close</Button>
                             <Button variant="primary" onClick={() => this.props.handleSave(this.state)}>Save</Button>

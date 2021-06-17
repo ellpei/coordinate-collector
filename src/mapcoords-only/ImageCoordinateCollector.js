@@ -137,7 +137,7 @@ export default class ImageCoordinateCollector extends React.Component {
     render() {
         const {grabbing, currentDot} = this.state;
         const dim = this.state.dimensions;
-        const {dots, backgroundImageUrl, dotRadius, deleteDot, resetDots} = this.props;
+        const {dots, backgroundImageUrl, dotRadius, resetDots} = this.props;
         const grabClass = grabbing ? 'react-image-dot__grabbing' : '';
 
         return (
@@ -231,7 +231,7 @@ export default class ImageCoordinateCollector extends React.Component {
                                       <td>{dot.y}</td>
                                       <td>{dot.name}</td>
                                       <td>{dot.areaId}</td>
-                                      <td><Button variant='danger' onClick={() => deleteDot(i)}>×</Button></td>
+                                      <td><Button variant='danger' onClick={() => this.props.deleteDots([i])}>×</Button></td>
                               </tr>);})}
                           </tbody>
                           </Table>
