@@ -117,7 +117,7 @@ class FileForm extends React.Component {
     render() {
         return (
             <div id="fileForm">
-                <Container>
+                <Container className="justify-content-md-center">
                     <Row className="justify-content-md-center">
                         <Button onClick={this.upload} className="fileForm-child">Upload</Button>
                         <input type="file" className="hidden"

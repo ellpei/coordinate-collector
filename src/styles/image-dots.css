@@ -10,12 +10,13 @@
 
 .react-image-dot {
   position: absolute;
+  display: flex;
   cursor: move; /* Fallback for older browsers */
   cursor: -webkit-grab;
   cursor: -moz-grab;
   cursor: grab;
   z-index: 2;
-  border-radius: 0% 100% 100% 100%; 
+  border-radius: 0% 100% 100% 100%;
 }
 
 .react-image-dot__grabbing {
@@ -38,12 +39,11 @@
     z-index: 1;
 }
 
-.bottom-toolbox {
-    position: relative;
-    width: 100%;
+.dotsinfo {
+    position: inherit;
 }
 
 .dotsinfotable {
-    text-align: left;
-    max-width: 600px !important;
+    margin: auto;
+    max-width: 800px !important;
 }

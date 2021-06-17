@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dot from '../image-dots/Dot';
 import InputModal from './InputModal.js';
+import FileForm from './FileForm.js';
+import Table from 'react-bootstrap/Table';
+import {Button, Container, Row, Col} from 'react-bootstrap';
 
 const propTypes = {
   deleteDot: PropTypes.func.isRequired,
@@ -111,7 +114,7 @@ export default class ImageCoordinateCollector extends React.Component {
     render() {
         const {grabbing, currentDot} = this.state;
         const dim = this.state.dimensions;
-        const {dots, backgroundImageUrl, dotRadius} = this.props;
+        const {dots, backgroundImageUrl, dotRadius, deleteDot, resetDots} = this.props;
         const grabClass = grabbing ? 'react-image-dot__grabbing' : '';
 
         return (
@@ -154,7 +157,6 @@ export default class ImageCoordinateCollector extends React.Component {
                     key={-1}
                     />}
             </div>
-            number of points: {this.props.dots.length}
             {
                 this.state.showModal ? <InputModal
                 dimensions={dim}
@@ -166,8 +168,59 @@ export default class ImageCoordinateCollector extends React.Component {
                 /> : null
             }
 
-            {this.props.resetDots &&
-            <button onClick={this.resetDots}>Reset</button>}
+            <Container className="dotsinfo text-center">
+                <Row>
+                    <Col>
+                        number of points: {this.props.dots.length}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                            <FileForm
+                                imgSrc={this.state.src}
+                                title={this.state.title}
+                                points={this.state.dots}
+                                loadPointData={this.loadPointData}/>
+                    </Col>
+                </Row>
+                <Row className="text-center">
+                    <Col >
+                        <Table hover className="dotsinfotable">
+                          <thead>
+                              <tr>
+                              <th>#</th>
+                              <th>id</th>
+                              <th>shortName</th>
+                              <th>x</th>
+                              <th>y</th>
+                              <th>name</th>
+                              <th>areaId</th>
+                              <th>delete</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                          {dots.map((dot, i) => {
+                              return (<tr key={i}>
+                                      <td>{i} </td>
+                                      <td>{dot.id}</td>
+                                      <td>{dot.shortName}</td>
+                                      <td>{dot.x}</td>
+                                      <td>{dot.y}</td>
+                                      <td>{dot.name}</td>
+                                      <td>{dot.areaId}</td>
+                                      <td><Button variant='danger' onClick={() => deleteDot(i)}>×</Button></td>
+                              </tr>);})}
+                          </tbody>
+                          </Table>
+                        </Col>
+                    </Row>
+                    <Row className="text-center">
+                        <Col>
+                            <Button variant='success' onClick={() => resetDots()}>Reset</Button>
+                        </Col>
+                    </Row>
+
+            </Container>
         </div>
         );
     }

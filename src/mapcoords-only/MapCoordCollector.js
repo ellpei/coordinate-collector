@@ -1,8 +1,6 @@
 import '../styles/image-dots.css';
 import React from 'react';
-import FileForm from './FileForm.js';
 import ImageCoordinateCollector from './ImageCoordinateCollector.js';
-import DotsInfo from './DotsInfo.js';
 import { Prompt } from 'react-router';
 
 class MapCoordCollector extends React.Component {
@@ -106,18 +104,10 @@ class MapCoordCollector extends React.Component {
                 deleteDot={this.deleteDot}
                 saveDot={this.saveDot}
                 addDot={this.addDot}
+                resetDots={this.resetDots}
                 dotRadius={10}
                 areaId={this.state.areaId}
                 />
-                <div className="bottom-toolbox">
-                {this.props.resort.title}
-                    <FileForm
-                        imgSrc={this.state.src}
-                        title={this.state.title}
-                        points={this.state.dots}
-                        loadPointData={this.loadPointData}/>
-                    <DotsInfo dots={this.state.dots} deleteDot={this.deleteDot} resetDots={this.resetDots}></DotsInfo>
-                </div>
             </div>);
     }
 }
