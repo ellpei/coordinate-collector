@@ -7,8 +7,8 @@ import Table from 'react-bootstrap/Table';
 import {Button, Container, Row, Col} from 'react-bootstrap';
 
 const propTypes = {
-  deleteDot: PropTypes.func.isRequired,
-  addDot: PropTypes.func.isRequired,
+  deleteDots: PropTypes.func.isRequired,
+  addDots: PropTypes.func.isRequired,
   resetDots: PropTypes.func,
   dotStyles: PropTypes.object,
   dotRadius: PropTypes.number,
@@ -54,7 +54,8 @@ export default class ImageCoordinateCollector extends React.Component {
             let dot = {
                 x: x,
                 y: y,
-                areaId: this.props.areaId
+                areaId: this.props.areaId,
+                items: []
             };
 
             this.setState({
@@ -73,12 +74,34 @@ export default class ImageCoordinateCollector extends React.Component {
 
     moveDot = (index) => {
         let dot = this.props.dots[index];
+        let dots = [...this.props.dots];
+        let indices = [];
+        let items = [];
+
+        dots.forEach((other, i) => {
+            if(other.x === dot.x && other.y === dot.y) {
+                indices.push(i);
+                items = [...items, {
+                    id: other.id,
+                    name: other.name,
+                    shortName: other.shortName,
+                    areaId: other.areaId
+                }];
+            }
+        });
+
+        dot = {
+            x: dot.x,
+            y: dot.y,
+            items: items,
+        };
+
         this.setState({
             grabbing: true,
             currentDot: dot,
             showModal: true,
         });
-        this.props.deleteDot(index);
+        this.props.deleteDots(indices);
     }
 
     resetDots = () => {
@@ -176,11 +199,11 @@ export default class ImageCoordinateCollector extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-                            <FileForm
-                                imgSrc={this.state.src}
-                                title={this.props.title}
-                                points={this.props.dots}
-                                loadPointData={this.props.loadPointData}/>
+                        <FileForm
+                            imgSrc={this.state.src}
+                            title={this.props.title}
+                            points={this.props.dots}
+                            loadPointData={this.props.loadPointData}/>
                     </Col>
                 </Row>
                 <Row className="text-center">

@@ -10,20 +10,13 @@ class InputModal extends React.Component {
         super(props);
 
         this.state = {
-            id: this.props.currentDot.id,
-            name: this.props.currentDot.name,
-            shortName: this.props.currentDot.shortName,
-            areaId: this.props.currentDot.areaId
-        }
-    }
-
-    clearFields = () => {
-        this.setState({
-            id: '',
-            name: '',
-            shortName: '',
-            areaId: ''
-        });
+            items: props.currentDot.items.length === 0 ? [{
+                id: '',
+                name: '',
+                shortName: '',
+                areaId: props.currentDot.areaId
+            }] : props.currentDot.items
+        };
     }
 
     onKeyPress = (e) => {
@@ -32,14 +25,28 @@ class InputModal extends React.Component {
         }
     }
 
-    handleInputChange = (e) => {
+    handleInputChange = (e, index) => {
         const target = e.target;
         const value = target.value;
         const name = target.name;
+        let items = [...this.state.items];
+        let item = items[index];
+        item[name] = value;
 
         this.setState({
-          [name]: value
+            items: items,
         });
+    }
+
+    addAnother = () => {
+        let newObj = {
+            id: '',
+            name: '',
+            shortName: '',
+            areaId: this.props.currentDot.areaId
+        };
+
+        this.setState({items: [...this.state.items, newObj ]});
     }
 
     render() {
@@ -70,64 +77,74 @@ class InputModal extends React.Component {
                                         onChange={(e) => {this.props.updateCurrentDot({y: e.target.valueAsNumber})}}/>
                                     </Col>
                                 </Form.Group>
+                                <hr/>
+                                {
+                                    this.state.items.map( (x, i) =>
+                                        <div className="dot-form-item" key={i}>
+                                            <Form.Group as={Row}>
+                                                <Form.Label column >
+                                                  id
+                                                </Form.Label>
+                                                <Col sm={8}>
+                                                  <Form.Control type="text"
+                                                  placeholder="Enter id..."
+                                                  name="id"
+                                                  defaultValue={x.id}
+                                                  onChange={(e) => this.handleInputChange(e, i)}
+                                                  autoFocus/>
+                                                </Col>
+                                            </Form.Group>
 
-                                <Form.Group as={Row}>
-                                    <Form.Label column >
-                                      id
-                                    </Form.Label>
-                                    <Col sm={8}>
-                                      <Form.Control type="text"
-                                      placeholder="Enter id..."
-                                      name="id"
-                                      defaultValue={this.state.id}
-                                      onChange={this.handleInputChange}
-                                      autoFocus/>
-                                    </Col>
-                                </Form.Group>
+                                            <Form.Group as={Row}>
+                                                <Form.Label column >
+                                                  name
+                                                </Form.Label>
+                                                <Col sm={8}>
+                                                  <Form.Control type="text"
+                                                  placeholder="Enter name..."
+                                                  name="name"
+                                                  defaultValue={x.name}
+                                                  onChange={(e) => this.handleInputChange(e, i)}/>
+                                                </Col>
+                                            </Form.Group>
 
-                                <Form.Group as={Row}>
-                                    <Form.Label column >
-                                      name
-                                    </Form.Label>
-                                    <Col sm={8}>
-                                      <Form.Control type="text"
-                                      placeholder="Enter name..."
-                                      name="name"
-                                      defaultValue={this.state.name}
-                                      onChange={this.handleInputChange}/>
-                                    </Col>
-                                </Form.Group>
+                                            <Form.Group as={Row}>
+                                                <Form.Label column>
+                                                  shortName
+                                                </Form.Label>
+                                                <Col sm={8}>
+                                                  <Form.Control type="text"
+                                                  placeholder="Enter shortName..."
+                                                  name="shortName"
+                                                  defaultValue={x.shortName}
+                                                  onChange={(e) => this.handleInputChange(e, i)}/>
+                                                </Col>
+                                            </Form.Group>
 
-                                <Form.Group as={Row}>
-                                    <Form.Label column>
-                                      shortName
-                                    </Form.Label>
-                                    <Col sm={8}>
-                                      <Form.Control type="text"
-                                      placeholder="Enter shortName..."
-                                      name="shortName"
-                                      defaultValue={this.state.shortName}
-                                      onChange={this.handleInputChange}/>
-                                    </Col>
-                                </Form.Group>
+                                            <Form.Group as={Row}>
+                                                <Form.Label column >
+                                                  areaId
+                                                </Form.Label>
+                                                <Col sm={8}>
+                                                  <Form.Control type="text"
+                                                  placeholder="Enter areaId..."
+                                                  name="areaId"
+                                                  defaultValue={x.areaId}
+                                                  onChange={(e) => this.handleInputChange(e, i)}
+                                                  onKeyPress={this.onKeyPress} />
+                                                </Col>
+                                            </Form.Group>
+                                            <hr/>
+                                        </div>
+                                    )
 
-                                <Form.Group as={Row}>
-                                    <Form.Label column >
-                                      areaId
-                                    </Form.Label>
-                                    <Col sm={8}>
-                                      <Form.Control type="text"
-                                      placeholder="Enter areaId..."
-                                      name="areaId"
-                                      defaultValue={this.state.areaId}
-                                      onChange={this.handleInputChange}
-                                      onKeyPress={this.onKeyPress} />
-                                    </Col>
-                                </Form.Group>
+                                }
+
                             </Form>
                         </Card.Body>
                         <Card.Footer>
-                        <Button variant="secondary" onClick={handleClose}>Delete</Button>
+                            <Button variant="success" className="float-left" onClick={this.addAnother}>+</Button>
+                            <Button variant="secondary" onClick={handleClose}>Delete</Button>
                             <Button variant="secondary" onClick={() => this.props.handleSave(this.state)}>Close</Button>
                             <Button variant="primary" onClick={() => this.props.handleSave(this.state)}>Save</Button>
                         </Card.Footer>

@@ -34,24 +34,32 @@ class MapCoordCollector extends React.Component {
         return (coord/realLength)*renderedLength;
     }
 
-    addDot = (dot) => {
-        let dots = this.state.dots;
+    addDots = (dots) => {
+        let old = this.state.dots;
         this.setState({
-            dots: [...dots, dot],
+            dots: [...old, ...dots],
             shouldBlockNavigation: true,
         });
     }
 
     saveDot = (dot) => {
         let {dots} = this.state;
-        this.deleteDot(dots.length-1);
-        this.addDot(dot);
-        this.setState({areaId: dot.areaId});
+        this.deleteDots([dots.length-1]);
+
+        let newDots = dot.items.map((item, i) => {
+            let obj = {
+                x: dot.x,
+                y: dot.y
+            }
+            return {...obj,...item}
+        });
+        this.addDots(newDots);
+        this.setState({areaId: dot.items[0].areaId});
     }
 
-    deleteDot = (index) => {
+    deleteDots = (indices) => {
         this.setState({
-            dots: this.state.dots.filter((e, i) => {return i !== index;}),
+            dots: this.state.dots.filter((e, i) => !indices.includes(i)),
         });
     }
 
@@ -102,9 +110,9 @@ class MapCoordCollector extends React.Component {
                 title={this.state.title}
                 onLoadMap={this.onLoadPisteMap}
                 dots={dots}
-                deleteDot={this.deleteDot}
+                deleteDots={this.deleteDots}
                 saveDot={this.saveDot}
-                addDot={this.addDot}
+                addDots={this.addDots}
                 resetDots={this.resetDots}
                 dotRadius={10}
                 areaId={this.state.areaId}
