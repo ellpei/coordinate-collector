@@ -71,7 +71,7 @@ class InputModal extends React.Component {
                     style={{
                         top: 10,
                         left: left}}>
-                        <Card.Body>
+                        <Card.Body className="card-body">
                             <Card.Title>Edit point data</Card.Title>
                             <Form>
                                 <Form.Group as={Row}>
@@ -87,6 +87,7 @@ class InputModal extends React.Component {
                                     </Col>
                                 </Form.Group>
                                 <hr/>
+                                <div className="items-list">
                                 {this.state.items.map( (x, i) =>
                                         <div className="dot-form-item" key={i}>
                                             <Form.Group as={Row}>
@@ -152,9 +153,10 @@ class InputModal extends React.Component {
                                             </Form.Group>
                                             <hr/>
                                         </div>)}
+                                        </div>
                             </Form>
                         </Card.Body>
-                        <Card.Footer>
+                        <Card.Footer className="card-footer">
                             <Button variant="secondary" onClick={handleClose}>Delete</Button>
                             <Button variant="secondary" onClick={() => this.props.handleSave(this.state)}>Close</Button>
                             <Button variant="primary" onClick={() => this.props.handleSave(this.state)}>Save</Button>

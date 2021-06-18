@@ -8,7 +8,9 @@
 }
 
 .modal-body {
-    position: fixed;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
     z-index: 500;
     background-color: white;
     width: 45%;
@@ -16,6 +18,11 @@
     box-sizing: border-box;
     transition: all 0.3s ease-out;
     margin: 20px;
+    max-height: 80%;
+}
+
+.card-body {
+    overflow-y: scroll;
 }
 
 .card {
