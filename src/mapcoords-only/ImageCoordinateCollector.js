@@ -218,6 +218,7 @@ export default class ImageCoordinateCollector extends React.Component {
                               <th>y</th>
                               <th>name</th>
                               <th>areaId</th>
+                              <th>edit</th>
                               <th>delete</th>
                               </tr>
                           </thead>
@@ -231,7 +232,8 @@ export default class ImageCoordinateCollector extends React.Component {
                                       <td>{dot.y}</td>
                                       <td>{dot.name}</td>
                                       <td>{dot.areaId}</td>
-                                      <td><Button variant='danger' onClick={() => this.props.deleteDots([i])}>×</Button></td>
+                                      <td><Button size="sm" variant='outline-success' onClick={() => this.moveDot(i)}><b>✎</b></Button></td>
+                                      <td><Button size="sm" variant='outline-danger' onClick={() => this.props.deleteDots([i])}><b>×</b></Button></td>
                               </tr>);})}
                           </tbody>
                           </Table>
