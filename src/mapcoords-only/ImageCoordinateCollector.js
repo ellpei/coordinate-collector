@@ -4,7 +4,7 @@ import Dot from '../image-dots/Dot';
 import InputModal from './InputModal.js';
 import FileForm from './FileForm.js';
 import Table from 'react-bootstrap/Table';
-import {Button, Container, Row, Col} from 'react-bootstrap';
+import {Button, Container, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap';
 
 const propTypes = {
   deleteDots: PropTypes.func.isRequired,
@@ -41,7 +41,8 @@ export default class ImageCoordinateCollector extends React.Component {
                 renderHeight: img.offsetHeight,
                 realWidth: img.naturalWidth,
                 realHeight: img.naturalHeight,
-            }
+            },
+            currentZoomLevel: 100,
         });
     }
 
@@ -134,8 +135,19 @@ export default class ImageCoordinateCollector extends React.Component {
             });
     }
 
+    handleSelectZoom = (e) => {
+        this.setState(prevState => ({
+            currentZoomLevel: e,
+            dimensions: {
+              ...prevState.dimensions,
+              renderWidth: prevState.dimensions.realWidth * parseInt(e)/100,
+              renderHeight: prevState.dimensions.realHeight * parseInt(e)/100,
+            }
+        }));
+    }
+
     render() {
-        const {grabbing, currentDot} = this.state;
+        const {grabbing, currentDot, currentZoomLevel} = this.state;
         const dim = this.state.dimensions;
         const {dots, backgroundImageUrl, dotRadius, resetDots} = this.props;
         const grabClass = grabbing ? 'react-image-dot__grabbing' : '';
@@ -151,7 +163,7 @@ export default class ImageCoordinateCollector extends React.Component {
                 <img
                 id="pistemap-img"
                 src={backgroundImageUrl} alt="Piste map"
-                width={dim.realWidth} onLoad={this.onLoadPisteMap} />
+                width={dim.renderWidth} height={dim.renderHeight} onLoad={this.onLoadPisteMap} />
 
                 {dots.map((dot, i) =>
                     <Dot
@@ -190,6 +202,17 @@ export default class ImageCoordinateCollector extends React.Component {
                 currentDot={this.state.currentDot}
                 /> : null
             }
+            <Container>
+                <Row>
+                    <Col>
+                        <DropdownButton title="Zoom" id="dropdown-menu-zoom" onSelect={this.handleSelectZoom}>
+                            {['50', '75', '100', '125', '150'].map(z =>
+                                <Dropdown.Item key={z} eventKey={z} active={currentZoomLevel === z}>{z}%</Dropdown.Item>
+                            )}
+                        </DropdownButton>
+                    </Col>
+                </Row>
+            </Container>
 
             <Container className="dotsinfo text-center">
                 <Row>
